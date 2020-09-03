@@ -17,3 +17,5 @@ app/js/bundle
 
 /build/
 /dist/
+
+package-lock.json
