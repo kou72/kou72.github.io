@@ -2,7 +2,7 @@
   "scripts": {
     "build": "npx gulp dist --codelabs-dir=codelabs",
     "docs": "rm -rf docs/ && mv dist docs && rm docs/codelabs && cp -r codelabs docs/codelabs",
-    "push": "git add -A && timestamp=$(date \"+%s\") && git commit -m \"automated commited $timestamp\" && git push origin HEAD",
+    "push": "git add -A && timestamp=$(date \"+%Y%m%d-%H%M%S\") && git commit -m \"automated commited $timestamp\" && git push origin HEAD",
     "deploy": "run-s build docs push"
   },
   "private": true,
@@ -37,6 +37,7 @@
     "jshint": "^2.9.6",
     "jshint-stylish": "^2.2.1",
     "merge-stream": "^1.0.1",
+    "npm-run-all": "^4.1.5",
     "path": "^0.12.7",
     "postcss-syntax": "^0.34.0",
     "swig-templates": "^2.0.3",
