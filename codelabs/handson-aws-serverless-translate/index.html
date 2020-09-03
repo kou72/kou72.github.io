@@ -1,0 +1,408 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>AWSハンズオンサーバーレス入門</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="handson-aws-serverless-translate"
+                  title="AWSハンズオンサーバーレス入門"
+                  environment="web"
+                  feedback-link="https://github.com/kappa0923/handson-aws-serverless-translate/issues">
+    
+      <google-codelab-step label="概要" duration="1">
+        <p>このハンズオンでは、AWSを利用した翻訳アプリケーションを開発することで、AWSにおけるサーバレスアプリの開発方法を学びます。</p>
+<p>サンプルアプリ : <a href="http://handson-serverless-20200222.s3-website-ap-northeast-1.amazonaws.com/" target="_blank">http://handson-serverless-20200222.s3-website-ap-northeast-1.amazonaws.com/</a><br></p>
+<p class="image-container"><img style="width: 601.70px" src="img/71980e086073b91a.png"></p>
+<h2 class="checklist" is-upgraded>What you&#39;ll learn</h2>
+<ul class="checklist">
+<li>サーバレスとは何かを知る</li>
+<li>AWSでの開発方法を学ぶ</li>
+<li>AWSでサーバレスアプリケーションを実現してみる</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="講師紹介" duration="1">
+        <p class="image-container"><img style="width: 218.17px" src="img/fffc362a4c4ebaab.jpeg"></p>
+<h2 is-upgraded>名前</h2>
+<p>渡辺 友康(kappa0923)</p>
+<h2 is-upgraded>普段は</h2>
+<ul>
+<li>GCP, AWSのArchitect</li>
+<li>AWS認定ソリューションアーキテクト</li>
+</ul>
+<h2 is-upgraded>コミュニティも色々</h2>
+<ul>
+<li>GDG Tokyo (<a href="https://gdg-tokyo.connpass.com/" target="_blank">https://gdg-tokyo.connpass.com/</a>)</li>
+<li>Firebase Japan User Group (<a href="https://firebase-community.connpass.com/" target="_blank">https://firebase-community.connpass.com/</a>)</li>
+<li>Marking Cloud (<a href="https://markingcloud.connpass.com/" target="_blank">https://markingcloud.connpass.com/</a>)</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="サーバレスとは" duration="1">
+        <h2 is-upgraded>概要</h2>
+<p>従来のアプリケーションでは、プログラムを実行するためには実行環境のサーバ構築やメンテナンスをする必要があった。</p>
+<p>サーバ環境ではリクエストに応じて、実行環境であるサーバのCPUやメモリを増強しなければならなかった。</p>
+<p>その労力から解放されるのがサーバレスの考え方であり、クラウドのデファクトスタンダードな考え方になりつつある。</p>
+<p>AWSではAWS Lambdaがコアを担っており、Amazon SQSやCloudWatch, S3などがその周辺を補強している。</p>
+<h2 is-upgraded>Why Lambda？</h2>
+<p>前述の通り、AWSが実行環境の面倒をみてくれる。</p>
+<p>関数ごとの実行時間やメモリも管理可能であり、必要に応じてカスタマイズ・チューニングを行うことができる。</p>
+<p>Lambdaでは複数のランタイム(実行環境)もサポートされ、面倒な設定抜きにすぐにアプリ開発を始められる。</p>
+<p>従来ではRDSへのコネクションプーリングができないという課題があったが、<a href="https://aws.amazon.com/jp/rds/proxy/" target="_blank">RDS Proxy</a>の登場により解決。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="ハンズオン開始" duration="1">
+        <h2 is-upgraded>アーキテクチャ概要図</h2>
+<p class="image-container"><img style="width: 601.70px" src="img/f31bbff9f12f20ab.png"></p>
+<ol type="1" start="1">
+<li>ClientがブラウザでS3にアクセスし、html, css, jsのWebアプリを表示</li>
+<li>WebアプリからAPI Gatewayを経由してLambdaを呼び出し</li>
+<li>LambdaからTranslateを呼び出し</li>
+<li>LambdaからWebアプリに翻訳結果を返却・表示</li>
+</ol>
+<p>※ Cloud9については後述</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="事前準備" duration="5">
+        <h2 is-upgraded>この章でやること概要</h2>
+<ol type="1" start="5">
+<li>AWSにログインする</li>
+<li>Cloud9を起動する</li>
+</ol>
+<h2 is-upgraded>AWSにログインする</h2>
+<p><a href="https://aws.amazon.com/jp/console/" target="_blank">AWSコンソール</a>にアクセスし、ログインする。</p>
+<p>リージョンは東京(ap-northeast-1)に設定する。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/a3fff9f2d5bbd1aa.png"></p>
+<h2 is-upgraded>Cloud9を起動する</h2>
+<p>Cloud9はブラウザでアクセス可能な、クラウドベースの統合開発環境(IDE)で、今回利用するLambdaでの開発を容易にしてくれる。</p>
+<p>まずは<a href="https://ap-northeast-1.console.aws.amazon.com/cloud9/home?region=ap-northeast-1" target="_blank">Cloud9コンソール</a>にアクセスする。</p>
+<p>環境を構築するため <strong>Create environment</strong> を選択する。</p>
+<ol type="1" start="1">
+<li><strong>Name environment</strong> で任意の <strong>Name</strong> を入力する。</li>
+<li><strong>Configure settings</strong> で以下の通り設定値を選択する。</li>
+</ol>
+<ul>
+<li>Create a new EC2 instance for environment</li>
+<li>t2.micro (1 GiB RAM + 1 vCPU)</li>
+<li>Amazon Linux</li>
+<li>After 30 minutes</li>
+</ul>
+<ol type="1" start="3">
+<li><strong>Review</strong> で確認し問題なければ <strong>Create environment</strong> でCloud9を開始する。</li>
+</ol>
+<p>正常にCloud9が作成されれば、以下のような画面が表示される。</p>
+<p class="image-container"><img style="width: 577.00px" src="img/8ab73d982969f7b3.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="骨組み作成" duration="5">
+        <h2 is-upgraded>この章でやること概要</h2>
+<ol type="1" start="1">
+<li>Translateを呼び出すLambdaを作成する</li>
+<li>Lambdaをクライアントから呼び出すためのAPI Gatewayを作成する</li>
+</ol>
+<h2 is-upgraded>Cloud9からリソース作成</h2>
+<p>Cloud9の右側のメニューから以下の通り選択する。</p>
+<ol type="1" start="1">
+<li><strong>AWS Resources</strong> を選択</li>
+<li><strong>Lambda</strong> を選択</li>
+<li><strong>Create a new Lambda function</strong> を選択</li>
+</ol>
+<p class="image-container"><img style="width: 286.00px" src="img/b89f5cecf73e067b.png"></p>
+<p>リソース作成ダイアログが表示されるので以下の通り選択する。</p>
+<ol type="1" start="1">
+<li><strong>Function name, Application name</strong> に任意の名前(postTranslateなど)を入力</li>
+<li><strong>Next</strong> を選択</li>
+<li><strong>Select runtime</strong> から <strong>Node.js 12.x.</strong> を選択</li>
+<li><strong>empty-nodejs</strong> のブループリントを選択</li>
+<li><strong>Next</strong> を選択</li>
+<li><strong>Function trigger</strong> は <strong>API Gateway</strong> を選択</li>
+<li><strong>Resource Path</strong> に <strong>/ (スラッシュ)</strong> を入力</li>
+<li><strong>Security</strong> は <strong>NONE</strong> を選択</li>
+<li><strong>Next</strong> を選択</li>
+<li><strong>Memory</strong> は <strong>128 MB</strong> を選択</li>
+<li><strong>Role</strong> は <strong>Automatically generate role</strong> を選択</li>
+<li><strong>Next</strong> を選択</li>
+<li>設定を確認して <strong>Finish</strong> を選択</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/c954ea9adfdf0b04.png"><img style="width: 601.70px" src="img/171f5d6d21243461.png"><img style="width: 601.70px" src="img/400640f5e9bc40dc.png"><img style="width: 601.70px" src="img/74d29390c7259c8e.png"></p>
+<p class="image-container"><img style="width: 517.52px" src="img/e6ca809b75de715f.png"></p>
+<p>一通りのセットアップが完了すると、 <strong>index.js</strong> や <strong>Remote Functions</strong> にリソースができる。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/94703a0a95988cea.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="翻訳API作成" duration="10">
+        <h2 is-upgraded>この章でやること概要</h2>
+<ol type="1" start="1">
+<li>LambdaからTranslate APIを呼び出すための設定</li>
+<li>Lambdaのコードを作成</li>
+</ol>
+<h2 is-upgraded>LambdaからTranslate APIを呼び出すための設定</h2>
+<p><a href="https://ap-northeast-1.console.aws.amazon.com/lambda/home?region=ap-northeast-1#/functions" target="_blank">Lambdaコンソール</a> にアクセスし、今回作成した関数を選択する。</p>
+<p><strong>アクセス権限</strong> を選択する。</p>
+<p><strong>実行ロール</strong> のロール名を選択し、LambdaのIAMロール設定画面を開く。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/94553746204ff629.png"></p>
+<p><strong>ポリシーをアタッチします</strong> を選択する。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/ef6ea35188ceca10.png"></p>
+<p><strong>TranslateReadOnly</strong> を検索・選択し、 <strong>ポリシーのアタッチ</strong> を選択する。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/8f4aefe1460385e5.png"></p>
+<h2 is-upgraded>Lambdaのコード作成</h2>
+<p>Cloud9に戻り、Lambda用のコードを編集する。</p>
+<p>ツリービューから <strong>index.js</strong> を選択し、コードエディタで <strong>index.js</strong> を開く。</p>
+<p>index.jsに以下のコードを貼り付け、保存する。</p>
+<h3 is-upgraded>index.js</h3>
+<pre><code>&#34;use strict&#34;;
+
+const AWS = require(&#34;aws-sdk&#34;);
+
+exports.handler = (event, context, callback) =&gt; {
+    console.log(event);
+    const translate = new AWS.Translate({ apiVersion: &#39;2017-07-01&#39; });
+
+    // リクエストからデータ取り出し
+    let srcMessage = &#39;&#39;;
+    if (event.body) {
+        let body =  typeof (event.body) === &#39;string&#39; ? JSON.parse(event.body) : event.body;
+        srcMessage = body.message;
+        console.log(srcMessage);
+    }
+
+    // Translateへのリクエストパラメータ
+    const params = {
+        SourceLanguageCode: &#39;ja&#39;,
+        TargetLanguageCode: &#39;en&#39;,
+        Text: srcMessage,
+    };
+
+    // 翻訳実行
+    translate.translateText(params, (err, data) =&gt; {
+        if (err) {
+            console.error(err);
+            const response = {
+                statusCode: 200,
+                body: JSON.stringify({ message: &#34;Translation error.&#34; }),
+            };
+            callback(null, response);
+            return;
+        }
+
+        console.log(data);
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify({ message: data.TranslatedText }),
+            headers: {
+                &#34;Access-Control-Allow-Origin&#34;: &#34;*&#34;
+            }
+        };
+        callback(null, response);
+    })
+};</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Lambda関数を実行する" duration="10">
+        <h2 is-upgraded>この章でやること概要</h2>
+<ol type="1" start="1">
+<li>Cloud9上でLambda関数をローカル実行</li>
+<li>API Gateway経由でローカル実行</li>
+</ol>
+<h2 is-upgraded>Cloud9上でLambda関数をローカル実行する</h2>
+<p>画面右側の <strong>AWS Resources </strong>から <strong>Local Functions </strong>内の関数名を右クリックする。</p>
+<p><strong>Run</strong> &gt; <strong>Run Local </strong>を選択する。</p>
+<p class="image-container"><img style="width: 360.00px" src="img/76dd437b4b215218.png"></p>
+<p><strong>Payload</strong> タブに以下の内容を入力し、 <strong>Runボタン </strong>を選択するとLambdaがローカルで実行される。</p>
+<pre><code>{
+    &#34;body&#34;: {
+        &#34;message&#34;: &#34;こんにちは世界！&#34;
+    }
+}</code></pre>
+<p>実行が完了すると、Lambdaのログが画面中央に表示される。</p>
+<p class="image-container"><img style="width: 511.15px" src="img/a0221ccb12463295.png"></p>
+<h2 is-upgraded>API Gateway 経由でローカル実行する</h2>
+<p>画面右側の <strong>AWS Resources</strong> から <strong>Local Functions</strong> 内の関数名を右クリックする。</p>
+<p><strong>Run</strong> &gt; <strong>Run API Gateway Local</strong> を選択する。</p>
+<p><strong>Payload</strong> タブに以下の内容を入力し、 <strong>Run</strong> を選択するとLambdaがAPI Gateway経由でローカル実行される。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>Path</p>
+</td><td colspan="1" rowspan="1"><p><code>/</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Method</p>
+</td><td colspan="1" rowspan="1"><p><code>POST</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Body</p>
+</td><td colspan="1" rowspan="1"><p><code>{</code></p>
+<p><code>    &#34;message&#34;: &#34;こんにちは世界！&#34;</code></p>
+<p><code>}</code></p>
+</td></tr>
+</table>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="デプロイとデバッグ" duration="10">
+        <h2 is-upgraded>この章でやること概要</h2>
+<ol type="1" start="1">
+<li>WebアプリからAPIを実行できるよう、Lambdaをデプロイする</li>
+<li>Cloud9からcurlでLambdaを呼び出す</li>
+</ol>
+<h2 is-upgraded>Lambdaデプロイ</h2>
+<p>画面右側の <strong>AWS Resources</strong> から <strong>Local Functions</strong> 内の関数名を右クリックする。</p>
+<p><strong>Deploy</strong> を選択するとLambdaに関数がデプロイされる。</p>
+<p>これでAPI Gateway経由でLambdaが実行できるようになっている。</p>
+<h2 is-upgraded>Cloud9からcurlでLambdaを呼び出す</h2>
+<p><a href="https://ap-northeast-1.console.aws.amazon.com/lambda/home?region=ap-northeast-1#/functions" target="_blank">Lambdaコンソール</a> にアクセスし、今回作成した関数を選択する。</p>
+<p><strong>設定</strong> タブを選択し、 <strong>API Gateway</strong> を選択すると、画面下部に APIエンドポイント が表示される。</p>
+<p>このURLがAPIのエンドポイントなので、URLをコピーしておく。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/ac64bcb7723390fe.png"></p>
+<p>再びCloud9に戻り、ターミナルから以下のコマンドを実行する。</p>
+<p>※ WebアプリからAPIを呼び出す際の再現</p>
+<pre>$ curl -XPOST -d &#39;{&#34;message&#34;:&#34;こんにちは世界！&#34;}&#39; コピーしたURL</pre>
+<p>すると以下のような出力が得られる。</p>
+<pre>{&#34;message&#34;:&#34;Hello the world!&#34;}</pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Webアプリ作成" duration="10">
+        <h2 is-upgraded>この章でやること概要</h2>
+<ol type="1" start="1">
+<li>Webアプリの資材をCloud9にアップロードする</li>
+<li>WebアプリからAPI呼び出し部分を修正する</li>
+<li>資材をCloud9からS3にアップロードする</li>
+<li>S3のアプリを公開する</li>
+</ol>
+<h2 is-upgraded>Webアプリの資材をS3にアップロードする</h2>
+<p><a href="https://github.com/kappa0923/aws-serverless-translate/archive/master.zip" target="_blank">GitHubリポジトリ</a> から今回使用する資材をダウンロードする。</p>
+<p>ダウンロード後、ファイルを解凍し public フォルダを見つける。</p>
+<p>ツリービューで今回作成したプロジェクト名を選択し、メニューから <strong>File</strong> &gt; <strong>Upload Local Files...</strong> を選択する。</p>
+<p class="image-container"><img style="width: 323.75px" src="img/b6d21b120cbe0169.png"></p>
+<p>ファイルアップロードダイアログが表示されるため、 <strong>Select Folder </strong>を選択する。</p>
+<p>先程解凍した <strong>publicディレクトリ</strong> を選択し、アップロードする。</p>
+<p>アップロード後、ツリービューは以下のようになる。</p>
+<p class="image-container"><img style="width: 252.50px" src="img/47032db15cc5642e.png"></p>
+<h2 is-upgraded>WebアプリからAPI呼び出し部分を修正する</h2>
+<p>Webアプリから翻訳APIを呼び出すため、Webアプリのコードを修正する。</p>
+<p>Cloud9のツリービューから <strong>public/scripts/index.js</strong> を開く。</p>
+<p>25行目で呼び出すAPIのエンドポイントを指定しているため、先程コピーしたAPIのURLを記載する。</p>
+<pre><code>// TODO : 翻訳API呼び出し
+const translateUrl = &#39;&lt;APIのURL&gt;&#39;;</code></pre>
+<p>変更を忘れずに保存する(Ctrl + Sなどで)。</p>
+<h2 is-upgraded>資材をCloud9からS3にアップロードする</h2>
+<p><a href="https://s3.console.aws.amazon.com/s3/home?region=ap-northeast-1" target="_blank">S3コンソール</a> にアクセスし、資材をアップロードするバケットを作成する。</p>
+<p><strong>バケットを作成する </strong>をクリックする。</p>
+<p><strong>バケット名 </strong>を入力して <strong>作成</strong> をクリックすると、バケットが作成される。</p>
+<p>再びCloud9に戻り、以下のコマンドを実行する。</p>
+<pre>aws s3 sync public s3://&lt;バケット名&gt;</pre>
+<p>S3バケットを確認し、以下のようになっていればOK。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/8bfe7d17e00f051a.png"></p>
+<h2 is-upgraded>S3のアプリを公開する</h2>
+<p>S3バケットから <strong>アクセス権限</strong> タブを選択し、 <strong>ブロックパブリックアクセス</strong> を選択する。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/b6cf9bf9ebb24b90.png"></p>
+<p><strong>編集</strong> をクリックして、以下のように設定する。</p>
+<ol type="1" start="1">
+<li>パブリックアクセスをすべてブロック のチェックを外す</li>
+<li>以下のチェックを入れる</li>
+</ol>
+<ul>
+<li>「新しいアクセスコントロールリスト (ACL) を介して許可されたバケットとオブジェクトへのパブリックアクセスをブロックする」</li>
+<li>「任意のアクセスコントロールリスト (ACL) を介して許可されたバケットとオブジェクトへのパブリックアクセスをブロックする」</li>
+</ul>
+<ol type="1" start="3">
+<li>保存を選択するとダイアログが表示されるため、 <strong>確認</strong> を入力し確認を選択する</li>
+</ol>
+<p><strong>バケットポリシー</strong> を選択し、以下の内容を入力し保存する。</p>
+<p>※<strong> &lt;バケット名&gt;</strong> の部分は自分が作成したS3バケット名(handson-serverless-20200222など)に変更すること。</p>
+<pre><code>{
+    &#34;Version&#34;: &#34;2012-10-17&#34;,
+    &#34;Statement&#34;: [
+        {
+            &#34;Effect&#34;: &#34;Allow&#34;, 
+            &#34;Principal&#34;: &#34;*&#34;, 
+            &#34;Action&#34;: &#34;s3:GetObject&#34;, 
+            &#34;Resource&#34;: &#34;arn:aws:s3:::&lt;バケット名&gt;/*&#34; 
+        } 
+    ] 
+}</code></pre>
+<p><strong>プロパティ</strong> タブを選択し、 <strong>Static web hosting</strong> カードを選択する。</p>
+<p><strong>このバケットを使用してウェブサイトをホストする</strong> を選択し、インデックスドキュメントに <strong>index.html</strong> と入力する。</p>
+<p>他のフィールドは空白のままで、 <strong>保存</strong> を選択する。</p>
+<p>このとき、上部に表示されている <strong>エンドポイント</strong> のURLを控えておく。</p>
+<p class="image-container"><img style="width: 471.15px" src="img/cb9c600f76475142.png"></p>
+<p>これでWebアプリのデプロイ完了。</p>
+<p>控えておいたURLにアクセスすると、作成したWebページにアクセスできる。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Congratulations!" duration="1">
+        <p>AWSの機能を使ってサーバレスアプリを構築することができました！</p>
+<p>クラウドを有効活用すると開発環境の用意も含め、これだけの時間で便利なアプリを作れます。</p>
+<h2 class="checklist" is-upgraded>What we&#39;ve covered</h2>
+<ul class="checklist">
+<li>Cloud9を利用したAWSでの開発方法</li>
+<li>LambdaとAPI Gatewayを組み合わせたAPIの作成</li>
+<li>AWS Translate APIの利用方法</li>
+<li>S3でのWebアプリ公開方法</li>
+</ul>
+<h2 is-upgraded>Next Steps</h2>
+<ul>
+<li>今回はCI/CDは考えていませんが、頻繁に更新するのであればCI/CDも構築しましょう。特に、Lambda + API GatewayはServerless Frameworkなどのツールも用意されており、CI/CDに組み込みやすい。</li>
+<li>S3だけだとWebアプリがSSL/TLS暗号化に対応しておらず、カスタムドメインにも対応していません。これらに対応するにはCloudFrontを使いましょう。</li>
+</ul>
+<h2 is-upgraded>後始末</h2>
+<ul>
+<li>不要なリソースが残っているとお金がかかるので、要らなければ削除しましょう。</li>
+<li>作成されたS3バケットの中身も空にしておきます。</li>
+<li>Cloud9もEC2の料金がかかったりするので削除しておきましょう。</li>
+</ul>
+<p class="image-container"><img style="width: 601.70px" src="img/4b271fd8bf930628.png"></p>
+<h2 is-upgraded>補足</h2>
+<ul>
+<li>Amazon Translateはカスタム辞書にも対応しています。</li>
+</ul>
+<p>ブランド名やキャラクター名を翻訳したい場合は活用してみましょう。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/translate/latest/dg/how-custom-terminology.html" target="_blank">https://docs.aws.amazon.com/ja_jp/translate/latest/dg/how-custom-terminology.html</a><br></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

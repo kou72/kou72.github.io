@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "build": "npx gulp dist --codelabs-dir=codelabs",
+    "docs": "rm -rf docs/ && mv dist docs && rm docs/codelabs && cp -r codelabs docs/codelabs",
+    "push": "git add -A && timestamp=$(date \"+%s\") && git commit -m \"automated commited $timestamp\" && git push origin HEAD",
+    "deploy": "run-s build docs push"
+  },
   "private": true,
   "devDependencies": {
     "autoprefixer": "^9.3.1",

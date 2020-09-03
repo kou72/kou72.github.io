@@ -95,8 +95,24 @@ Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs w
 </a>
 </paper-listbox>
 </paper-dropdown-menu>
-</div>
+<paper-dropdown-menu label="Filter by category" class="dropdown-filter" no-label-float noink no-animations>
+<paper-listbox id="categorylist" slot="dropdown-content" class="dropdown-content" on-iron-activate="onCategoryActivate" attr-for-selected="filter">
+<paper-item filter="aws">aws</paper-item>
+<paper-item filter="firebase">firebase</paper-item>
+</paper-listbox>
+</paper-dropdown-menu></div>
 <card-sorter id="cards" class="site-width">
+<a href="/codelabs/handson-aws-serverless-translate/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-aws" data-category="aws" data-title="AWSハンズオンサーバーレス入門" data-duration="55" data-updated="2020-08-25T20:18:55Z" data-tags="" data-pin="">
+<div class="description">AWSハンズオンサーバーレス入門</div>
+<div class="card-duration">
+<span>55 min </span>
+<span>Updated Aug 25, 2020</span>
+</div>
+<div class="card-footer">
+<div class="category-icon aws-icon"></div>
+<paper-button class="aws-bg">Start</paper-button>
+</div>
+</a>
 <a href="/codelabs/handson-firebase-todolist/index.html?index=..%2F..index" on-tap="navigate" class="codelab-card category-firebase" data-category="firebase" data-title="クラウドTodoリスト作成ハンズオン" data-duration="60" data-updated="2020-09-03T12:32:36Z" data-tags="firebase-tools 8.9.0,node v12.12.0,npm 6.11.3" data-pin="">
 <div class="description">クラウドTodoリスト作成ハンズオン</div>
 <div class="card-duration">
