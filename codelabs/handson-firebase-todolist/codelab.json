@@ -1,0 +1,27 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-09-03T12:32:36Z",
+  "id": "handson-firebase-todolist",
+  "duration": 60,
+  "title": "クラウドTodoリスト作成ハンズオン",
+  "authors": "suzukiKou",
+  "summary": "クラウドTodoリスト作成ハンズオン",
+  "source": "1f7TxC47wI79Iq2GFOdg51Dep_m_zDMkadtfxpbQ5ZgM",
+  "theme": "firebase",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "firebase"
+  ],
+  "tags": [
+    "firebase-tools 8.9.0",
+    "node v12.12.0",
+    "npm 6.11.3"
+  ],
+  "feedback": "https://github.com/kou72/my_todo_list/issues",
+  "url": "handson-firebase-todolist"
+}
