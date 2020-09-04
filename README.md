@@ -18,7 +18,7 @@ build結果をdocsにリネームすることで[GitHub Pagesで公開](https://
 
 ### 環境を整える
 
-Node.jsとGo(とclaat)が使える環境が必要です。
+Node.jsとGo(とclaat)が使える環境が必要です。  
 以下がインストール済みか確認してください。
 
 - [Go](https://golang.org/dl/) language
@@ -32,7 +32,7 @@ Google Documentでコンテンツを作成します。
 - [公式サンプル](https://docs.google.com/document/d/1E6XMcdTexh5O8JwGy42SY3Ehzi8gOfUGiqTiUX6N04o/edit)
 - [公式フォーマットガイド](https://github.com/googlecodelabs/tools/blob/master/FORMAT-GUIDE.md)
 
-[Preview Codelab](https://chrome.google.com/webstore/detail/preview-codelab/lhojjnijnkiglhkggagbapfonpdlinji)でプレビューしながら作ることができます。
+[Preview Codelab](https://chrome.google.com/webstore/detail/preview-codelab/lhojjnijnkiglhkggagbapfonpdlinji)を使うことでプレビューしながら作ることができます。
 
 ### codelabs/に追加する
 
@@ -53,12 +53,13 @@ cd ../
 
 ### デプロイする
 
-npm install で必要なパッケージを取得します
+必要なパッケージを取得します
 
 ```
 npm install
 ```
-npm run deploy でデプロイ(=push)します。
+
+用意したコマンドあるので、これを実行してデプロイ(=push)します。
 
 ```
 npm run deploy
