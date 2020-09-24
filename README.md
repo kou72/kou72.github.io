@@ -40,7 +40,7 @@ Google Documentでコンテンツを作成します。
 
 ```
 git clone https://github.com/kou72/kou72.github.io.git
-cd kou72.github.io.git/
+cd kou72.github.io/
 ```
 
 codelabs/ に移動してcodelab形式のHTMLファイルを生成します。
