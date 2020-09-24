@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-09-24T13:41:22Z",
+  "id": "handson-firebase-cloud-share-file",
+  "duration": 60,
+  "title": "Firebaseハンズオン ファイル共有サービス",
+  "summary": "Firebaseハンズオン ファイル共有",
+  "source": "1qCL-KivSaZ6BOUC-SyYiyK2-bqZRwdbMEyZTU6L6PM4",
+  "theme": "firebase",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "Firebase"
+  ],
+  "tags": [],
+  "url": "handson-firebase-cloud-share-file"
+}
