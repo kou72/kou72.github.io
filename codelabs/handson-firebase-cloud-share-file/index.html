@@ -204,7 +204,7 @@ service firebase.storage {
     
       <google-codelab-step label="アップロード処理の実装" duration="5">
         <h2 is-upgraded>ファイルアップロード処理を記述します。</h2>
-<p>public/scripts/index.js:  L.92 ~ uploadClicked() 内</p>
+<p>public/scripts/index.js:  L.100 ~ uploadClicked() 内</p>
 <p>// TODO: アップロード処理を実装 部分を以下のコードに書き換えます。</p>
 <pre><code>    // TODO: アップロード処理を実装
     const imageRef = this.storageRef.child(`files/${this.fileName}`);
@@ -232,7 +232,7 @@ service firebase.storage {
 </ul>
 </aside>
 <h2 is-upgraded>アップロードのプログレスを表示しましょう</h2>
-<p>scripts/index.js  L.105  // TODO: プログレスを表示 の部分を以下に書き換えます</p>
+<p>scripts/index.js  L.103  // TODO: プログレスを表示 の部分を以下に書き換えます</p>
 <pre><code>      // TODO: プログレスを表示
       let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log(&#39;Upload is &#39; + progress + &#39;% done&#39;);
@@ -253,7 +253,7 @@ service firebase.storage {
     
       <google-codelab-step label="共有URL取得処理の実装" duration="5">
         <p>アップロードしたファイルを共有するための URL を取得する処理を記述します。</p>
-<p>scripts/index.js  L.120 // TODO: URL 取得処理 の部分を以下で書き換えます。</p>
+<p>scripts/index.js  L.118 // TODO: URL 取得処理 の部分を以下で書き換えます。</p>
 <pre><code>      // TODO: URL 取得処理
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) =&gt; {
         console.log(&#39;File available at&#39;, downloadURL);
