@@ -132,7 +132,8 @@
 <h2 is-upgraded>Firebase プロジェクトを紐付け</h2>
 <p>Cloud Shell で以下のコマンドを実行します。</p>
 <p><code>CloudShell</code></p>
-<pre><code>firebase login --no-localhost --reauth</code></pre>
+<pre><code>firebase logout
+firebase login --no-localhost</code></pre>
 <p>URLからプロジェクトの作成と同じアカウントでログインし、出力コードをペーストして処理を完了させます。</p>
 <aside class="warning"><p><strong>注意: </strong>URLはクリックせずcopy&amp;pastしてください</p>
 </aside>
@@ -254,7 +255,7 @@ service firebase.storage {
     
       <google-codelab-step label="共有URL取得処理の実装" duration="5">
         <p>アップロードしたファイルを共有するための URL を取得する処理を記述します。</p>
-<p>scripts/index.js  L.118 <code>//TODO:URL取得処理</code></p>
+<p>scripts/index.js  L.120 <code>//TODO:URL取得処理</code></p>
 <p>の部分を以下で書き換えます。</p>
 <pre><code>      // TODO: URL 取得処理
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) =&gt; {
