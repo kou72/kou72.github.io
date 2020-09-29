@@ -71,7 +71,7 @@ npm run deploy の中身はこんな感じです。
   "scripts": {
     "build": "npx gulp dist --codelabs-dir=codelabs",
     "docs": "rm -rf docs/ && mv dist docs && rm docs/codelabs && cp -r codelabs docs/codelabs",
-    "push": "git add -A && timestamp=$(date \"+%Y%m%d-%H%M%S\") && git commit -m \"automated commited $timestamp\" && git push origin HEAD",
+    "push": "git add -A && git commit -m \"automated commited $(date \"+%Y%m%d-%H%M%S\")\" && git push origin HEAD",
     "deploy": "run-s build docs push"
   },
 ```
