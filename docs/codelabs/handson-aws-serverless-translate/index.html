@@ -30,31 +30,12 @@
       <google-codelab-step label="概要" duration="1">
         <p>このハンズオンでは、AWSを利用した翻訳アプリケーションを開発することで、AWSにおけるサーバレスアプリの開発方法を学びます。</p>
 <p>サンプルアプリ : <a href="http://handson-serverless-20200222.s3-website-ap-northeast-1.amazonaws.com/" target="_blank">http://handson-serverless-20200222.s3-website-ap-northeast-1.amazonaws.com/</a><br></p>
-<p class="image-container"><img style="width: 601.70px" src="img/71980e086073b91a.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\71980e086073b91a.png"></p>
 <h2 class="checklist" is-upgraded>What you&#39;ll learn</h2>
 <ul class="checklist">
 <li>サーバレスとは何かを知る</li>
 <li>AWSでの開発方法を学ぶ</li>
 <li>AWSでサーバレスアプリケーションを実現してみる</li>
-</ul>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="講師紹介" duration="1">
-        <p class="image-container"><img style="width: 218.17px" src="img/fffc362a4c4ebaab.jpeg"></p>
-<h2 is-upgraded>名前</h2>
-<p>渡辺 友康(kappa0923)</p>
-<h2 is-upgraded>普段は</h2>
-<ul>
-<li>GCP, AWSのArchitect</li>
-<li>AWS認定ソリューションアーキテクト</li>
-</ul>
-<h2 is-upgraded>コミュニティも色々</h2>
-<ul>
-<li>GDG Tokyo (<a href="https://gdg-tokyo.connpass.com/" target="_blank">https://gdg-tokyo.connpass.com/</a>)</li>
-<li>Firebase Japan User Group (<a href="https://firebase-community.connpass.com/" target="_blank">https://firebase-community.connpass.com/</a>)</li>
-<li>Marking Cloud (<a href="https://markingcloud.connpass.com/" target="_blank">https://markingcloud.connpass.com/</a>)</li>
 </ul>
 
 
@@ -77,7 +58,7 @@
     
       <google-codelab-step label="ハンズオン開始" duration="1">
         <h2 is-upgraded>アーキテクチャ概要図</h2>
-<p class="image-container"><img style="width: 601.70px" src="img/f31bbff9f12f20ab.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\f31bbff9f12f20ab.png"></p>
 <ol type="1" start="1">
 <li>ClientがブラウザでS3にアクセスし、html, css, jsのWebアプリを表示</li>
 <li>WebアプリからAPI Gatewayを経由してLambdaを呼び出し</li>
@@ -98,7 +79,7 @@
 <h2 is-upgraded>AWSにログインする</h2>
 <p><a href="https://aws.amazon.com/jp/console/" target="_blank">AWSコンソール</a>にアクセスし、ログインする。</p>
 <p>リージョンは東京(ap-northeast-1)に設定する。</p>
-<p class="image-container"><img style="width: 601.70px" src="img/a3fff9f2d5bbd1aa.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\a3fff9f2d5bbd1aa.png"></p>
 <h2 is-upgraded>Cloud9を起動する</h2>
 <p>Cloud9はブラウザでアクセス可能な、クラウドベースの統合開発環境(IDE)で、今回利用するLambdaでの開発を容易にしてくれる。</p>
 <p>まずは<a href="https://ap-northeast-1.console.aws.amazon.com/cloud9/home?region=ap-northeast-1" target="_blank">Cloud9コンソール</a>にアクセスする。</p>
@@ -117,7 +98,7 @@
 <li><strong>Review</strong> で確認し問題なければ <strong>Create environment</strong> でCloud9を開始する。</li>
 </ol>
 <p>正常にCloud9が作成されれば、以下のような画面が表示される。</p>
-<p class="image-container"><img style="width: 577.00px" src="img/8ab73d982969f7b3.png"></p>
+<p class="image-container"><img style="width: 577.00px" src="img\8ab73d982969f7b3.png"></p>
 
 
       </google-codelab-step>
@@ -135,7 +116,7 @@
 <li><strong>Lambda</strong> を選択</li>
 <li><strong>Create a new Lambda function</strong> を選択</li>
 </ol>
-<p class="image-container"><img style="width: 286.00px" src="img/b89f5cecf73e067b.png"></p>
+<p class="image-container"><img style="width: 286.00px" src="img\b89f5cecf73e067b.png"></p>
 <p>リソース作成ダイアログが表示されるので以下の通り選択する。</p>
 <ol type="1" start="1">
 <li><strong>Function name, Application name</strong> に任意の名前(postTranslateなど)を入力</li>
@@ -152,10 +133,10 @@
 <li><strong>Next</strong> を選択</li>
 <li>設定を確認して <strong>Finish</strong> を選択</li>
 </ol>
-<p class="image-container"><img style="width: 601.70px" src="img/c954ea9adfdf0b04.png"><img style="width: 601.70px" src="img/171f5d6d21243461.png"><img style="width: 601.70px" src="img/400640f5e9bc40dc.png"><img style="width: 601.70px" src="img/74d29390c7259c8e.png"></p>
-<p class="image-container"><img style="width: 517.52px" src="img/e6ca809b75de715f.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\c954ea9adfdf0b04.png"><img style="width: 601.70px" src="img\171f5d6d21243461.png"><img style="width: 601.70px" src="img\400640f5e9bc40dc.png"><img style="width: 601.70px" src="img\74d29390c7259c8e.png"></p>
+<p class="image-container"><img style="width: 517.52px" src="img\e6ca809b75de715f.png"></p>
 <p>一通りのセットアップが完了すると、 <strong>index.js</strong> や <strong>Remote Functions</strong> にリソースができる。</p>
-<p class="image-container"><img style="width: 601.70px" src="img/94703a0a95988cea.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\94703a0a95988cea.png"></p>
 
 
       </google-codelab-step>
@@ -170,11 +151,11 @@
 <p><a href="https://ap-northeast-1.console.aws.amazon.com/lambda/home?region=ap-northeast-1#/functions" target="_blank">Lambdaコンソール</a> にアクセスし、今回作成した関数を選択する。</p>
 <p><strong>アクセス権限</strong> を選択する。</p>
 <p><strong>実行ロール</strong> のロール名を選択し、LambdaのIAMロール設定画面を開く。</p>
-<p class="image-container"><img style="width: 601.70px" src="img/94553746204ff629.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\94553746204ff629.png"></p>
 <p><strong>ポリシーをアタッチします</strong> を選択する。</p>
-<p class="image-container"><img style="width: 601.70px" src="img/ef6ea35188ceca10.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\ef6ea35188ceca10.png"></p>
 <p><strong>TranslateReadOnly</strong> を検索・選択し、 <strong>ポリシーのアタッチ</strong> を選択する。</p>
-<p class="image-container"><img style="width: 601.70px" src="img/8f4aefe1460385e5.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\8f4aefe1460385e5.png"></p>
 <h2 is-upgraded>Lambdaのコード作成</h2>
 <p>Cloud9に戻り、Lambda用のコードを編集する。</p>
 <p>ツリービューから <strong>index.js</strong> を選択し、コードエディタで <strong>index.js</strong> を開く。</p>
@@ -239,7 +220,7 @@ exports.handler = (event, context, callback) =&gt; {
 <h2 is-upgraded>Cloud9上でLambda関数をローカル実行する</h2>
 <p>画面右側の <strong>AWS Resources </strong>から <strong>Local Functions </strong>内の関数名を右クリックする。</p>
 <p><strong>Run</strong> &gt; <strong>Run Local </strong>を選択する。</p>
-<p class="image-container"><img style="width: 360.00px" src="img/76dd437b4b215218.png"></p>
+<p class="image-container"><img style="width: 360.00px" src="img\76dd437b4b215218.png"></p>
 <p><strong>Payload</strong> タブに以下の内容を入力し、 <strong>Runボタン </strong>を選択するとLambdaがローカルで実行される。</p>
 <pre><code>{
     &#34;body&#34;: {
@@ -247,7 +228,7 @@ exports.handler = (event, context, callback) =&gt; {
     }
 }</code></pre>
 <p>実行が完了すると、Lambdaのログが画面中央に表示される。</p>
-<p class="image-container"><img style="width: 511.15px" src="img/a0221ccb12463295.png"></p>
+<p class="image-container"><img style="width: 511.15px" src="img\a0221ccb12463295.png"></p>
 <h2 is-upgraded>API Gateway 経由でローカル実行する</h2>
 <p>画面右側の <strong>AWS Resources</strong> から <strong>Local Functions</strong> 内の関数名を右クリックする。</p>
 <p><strong>Run</strong> &gt; <strong>Run API Gateway Local</strong> を選択する。</p>
@@ -283,7 +264,7 @@ exports.handler = (event, context, callback) =&gt; {
 <p><a href="https://ap-northeast-1.console.aws.amazon.com/lambda/home?region=ap-northeast-1#/functions" target="_blank">Lambdaコンソール</a> にアクセスし、今回作成した関数を選択する。</p>
 <p><strong>設定</strong> タブを選択し、 <strong>API Gateway</strong> を選択すると、画面下部に APIエンドポイント が表示される。</p>
 <p>このURLがAPIのエンドポイントなので、URLをコピーしておく。</p>
-<p class="image-container"><img style="width: 601.70px" src="img/ac64bcb7723390fe.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\ac64bcb7723390fe.png"></p>
 <p>再びCloud9に戻り、ターミナルから以下のコマンドを実行する。</p>
 <p>※ WebアプリからAPIを呼び出す際の再現</p>
 <pre>$ curl -XPOST -d &#39;{&#34;message&#34;:&#34;こんにちは世界！&#34;}&#39; コピーしたURL</pre>
@@ -305,11 +286,11 @@ exports.handler = (event, context, callback) =&gt; {
 <p><a href="https://github.com/kappa0923/aws-serverless-translate/archive/master.zip" target="_blank">GitHubリポジトリ</a> から今回使用する資材をダウンロードする。</p>
 <p>ダウンロード後、ファイルを解凍し public フォルダを見つける。</p>
 <p>ツリービューで今回作成したプロジェクト名を選択し、メニューから <strong>File</strong> &gt; <strong>Upload Local Files...</strong> を選択する。</p>
-<p class="image-container"><img style="width: 323.75px" src="img/b6d21b120cbe0169.png"></p>
+<p class="image-container"><img style="width: 323.75px" src="img\b6d21b120cbe0169.png"></p>
 <p>ファイルアップロードダイアログが表示されるため、 <strong>Select Folder </strong>を選択する。</p>
 <p>先程解凍した <strong>publicディレクトリ</strong> を選択し、アップロードする。</p>
 <p>アップロード後、ツリービューは以下のようになる。</p>
-<p class="image-container"><img style="width: 252.50px" src="img/47032db15cc5642e.png"></p>
+<p class="image-container"><img style="width: 252.50px" src="img\47032db15cc5642e.png"></p>
 <h2 is-upgraded>WebアプリからAPI呼び出し部分を修正する</h2>
 <p>Webアプリから翻訳APIを呼び出すため、Webアプリのコードを修正する。</p>
 <p>Cloud9のツリービューから <strong>public/scripts/index.js</strong> を開く。</p>
@@ -324,10 +305,10 @@ const translateUrl = &#39;&lt;APIのURL&gt;&#39;;</code></pre>
 <p>再びCloud9に戻り、以下のコマンドを実行する。</p>
 <pre>aws s3 sync public s3://&lt;バケット名&gt;</pre>
 <p>S3バケットを確認し、以下のようになっていればOK。</p>
-<p class="image-container"><img style="width: 601.70px" src="img/8bfe7d17e00f051a.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\8bfe7d17e00f051a.png"></p>
 <h2 is-upgraded>S3のアプリを公開する</h2>
 <p>S3バケットから <strong>アクセス権限</strong> タブを選択し、 <strong>ブロックパブリックアクセス</strong> を選択する。</p>
-<p class="image-container"><img style="width: 601.70px" src="img/b6cf9bf9ebb24b90.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\b6cf9bf9ebb24b90.png"></p>
 <p><strong>編集</strong> をクリックして、以下のように設定する。</p>
 <ol type="1" start="1">
 <li>パブリックアクセスをすべてブロック のチェックを外す</li>
@@ -357,7 +338,7 @@ const translateUrl = &#39;&lt;APIのURL&gt;&#39;;</code></pre>
 <p><strong>このバケットを使用してウェブサイトをホストする</strong> を選択し、インデックスドキュメントに <strong>index.html</strong> と入力する。</p>
 <p>他のフィールドは空白のままで、 <strong>保存</strong> を選択する。</p>
 <p>このとき、上部に表示されている <strong>エンドポイント</strong> のURLを控えておく。</p>
-<p class="image-container"><img style="width: 471.15px" src="img/cb9c600f76475142.png"></p>
+<p class="image-container"><img style="width: 471.15px" src="img\cb9c600f76475142.png"></p>
 <p>これでWebアプリのデプロイ完了。</p>
 <p>控えておいたURLにアクセスすると、作成したWebページにアクセスできる。</p>
 
@@ -385,7 +366,7 @@ const translateUrl = &#39;&lt;APIのURL&gt;&#39;;</code></pre>
 <li>作成されたS3バケットの中身も空にしておきます。</li>
 <li>Cloud9もEC2の料金がかかったりするので削除しておきましょう。</li>
 </ul>
-<p class="image-container"><img style="width: 601.70px" src="img/4b271fd8bf930628.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img\4b271fd8bf930628.png"></p>
 <h2 is-upgraded>補足</h2>
 <ul>
 <li>Amazon Translateはカスタム辞書にも対応しています。</li>

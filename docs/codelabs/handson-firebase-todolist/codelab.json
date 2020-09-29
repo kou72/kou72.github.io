@@ -3,13 +3,12 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2020-09-25T18:03:04Z",
+  "updated": "2020-09-29T14:34:39Z",
   "id": "handson-firebase-todolist",
-  "duration": 60,
+  "duration": 59,
   "title": "クラウドTodoリスト作成ハンズオン",
-  "authors": "suzukiKou",
   "summary": "クラウドTodoリスト作成ハンズオン",
-  "source": "1f7TxC47wI79Iq2GFOdg51Dep_m_zDMkadtfxpbQ5ZgM",
+  "source": "1DZSUjagCdfEZmQcMjQnwkRYqFwG-Clc930I1nGqCZ3o",
   "theme": "firebase",
   "status": [
     "published"
