@@ -1,0 +1,22 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-11-04T11:36:14Z",
+  "id": "handson-aws-url-shortner",
+  "duration": 65,
+  "title": "AWSハンズオンURL短縮サービス",
+  "authors": "kou72",
+  "summary": "AWSハンズオンURL短縮サービス",
+  "source": "1BvCMQ4CdlAQB9PLvl_KPbkX-u4iBp4XGl4wHoso76Jw",
+  "theme": "aws",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "AWS"
+  ],
+  "tags": [],
+  "url": "handson-aws-url-shortner"
+}
