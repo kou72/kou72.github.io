@@ -177,13 +177,6 @@
 <p>先程解凍した <strong>publicディレクトリ</strong> を選択し、アップロードする。</p>
 <p>アップロード後、ツリービューは以下のようになる。</p>
 <p class="image-container"><img style="width: 252.50px" src="img/47032db15cc5642e.png"></p>
-<h2 is-upgraded>WebアプリからAPI呼び出し部分を修正する</h2>
-<p>Webアプリから翻訳APIを呼び出すため、Webアプリのコードを修正する。</p>
-<p>Cloud9のツリービューから <strong>public/scripts/index.js</strong> を開く。</p>
-<p>25行目で呼び出すAPIのエンドポイントを指定しているため、先程コピーしたAPIのURLを記載する。</p>
-<pre><code>// TODO : 翻訳API呼び出し
-const translateUrl = &#39;&lt;APIのURL&gt;&#39;;</code></pre>
-<p>変更を忘れずに保存する(Ctrl + Sなどで)。</p>
 <h2 is-upgraded>資材をCloud9からS3にアップロードする</h2>
 <p><a href="https://s3.console.aws.amazon.com/s3/home?region=ap-northeast-1" target="_blank">S3コンソール</a> にアクセスし、資材をアップロードするバケットを作成する。</p>
 <p><strong>バケットを作成する</strong> をクリックする。</p>
